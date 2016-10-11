@@ -7,7 +7,7 @@ except ImportError:
         asyncio = None
 
 try:
-    import threading
+    import multiprocessing as threading
 except ImportError:
     import rx.internal.concurrency as threading
 
