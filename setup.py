@@ -1,3 +1,4 @@
+import sys
 try:
     from setuptools import setup
 except ImportError:
@@ -37,7 +38,7 @@ setup(
     ],
     test_suite='nose.collector',
 
-    packages=['rx', 'rx.core', 'rx.core.py2', 'rx.core.py3', 'rx.internal',
+    packages=['rx', 'rx.core', 'rx.core.py2' if sys.version_info[0] == 2 else 'rx.core.py3', 'rx.internal',
               'rx.linq', 'rx.linq.observable', 'rx.linq.enumerable',
               'rx.concurrency', 'rx.concurrency.mainloopscheduler', 'rx.joins',
               'rx.linq.observable.blocking', 'rx.disposables', 'rx.subjects',
