@@ -22,18 +22,18 @@ class SerialDisposable(Disposable):
         property causes immediate disposal of the given disposable object.
         Assigning this property disposes the previous disposable object."""
 
-        should_dispose = self.is_disposed
         old = None
 
         with self.lock:
+            should_dispose = self.is_disposed
             if not should_dispose:
                 old = self.current
                 self.current = value
 
-        if old:
+        if old is not None:
             old.dispose()
 
-        if should_dispose and value:
+        if should_dispose and value is not None:
             value.dispose()
 
     disposable = property(get_disposable, set_disposable)
@@ -50,5 +50,5 @@ class SerialDisposable(Disposable):
                 old = self.current
                 self.current = None
 
-        if old:
+        if old is not None:
             old.dispose()

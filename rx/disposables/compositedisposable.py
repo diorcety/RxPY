@@ -59,7 +59,7 @@ class CompositeDisposable(Disposable):
 
         with self.lock:
             self.is_disposed = True
-            current_disposables = self.disposables[:]
+            current_disposables = self.disposables
             self.disposables = []
 
         for disposable in current_disposables:
@@ -70,7 +70,7 @@ class CompositeDisposable(Disposable):
         but does not dispose the CompositeDisposable."""
 
         with self.lock:
-            current_disposables = self.disposables[:]
+            current_disposables = self.disposables
             self.disposables = []
 
         for disposable in current_disposables:
