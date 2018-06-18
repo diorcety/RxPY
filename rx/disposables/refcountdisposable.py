@@ -47,7 +47,7 @@ class RefCountDisposable(Disposable):
                     self.is_disposed = True
                     disposable = self.underlying_disposable
 
-        if disposable:
+        if disposable is not None:
             disposable.dispose()
 
     def release(self):

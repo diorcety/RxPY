@@ -16,7 +16,7 @@ class SingleAssignmentDisposable(Disposable):
         self.current = None
         self.lock = config["concurrency"].RLock()
 
-        super(Disposable, self).__init__()
+        super(SingleAssignmentDisposable, self).__init__()
 
     def get_disposable(self):
         return self.current
@@ -25,18 +25,18 @@ class SingleAssignmentDisposable(Disposable):
         if self.current:
             raise Exception('Disposable has already been assigned')
 
-        should_dispose = self.is_disposed
         old = None
 
         with self.lock:
+            should_dispose = self.is_disposed
             if not should_dispose:
                 old = self.current
                 self.current = value
 
-        if old:
+        if old is not None:
             old.dispose()
 
-        if should_dispose and value:
+        if should_dispose and value is not None:
             value.dispose()
 
     disposable = property(get_disposable, set_disposable)
@@ -51,5 +51,5 @@ class SingleAssignmentDisposable(Disposable):
                 old = self.current
                 self.current = None
 
-        if old:
+        if old is not None:
             old.dispose()

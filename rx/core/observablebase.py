@@ -79,10 +79,7 @@ class ObservableBase(Observable):
         # https://social.msdn.microsoft.com/Forums/en-US/eb82f593-9684-4e27-
         # 97b9-8b8886da5c33/whats-the-rationale-behind-how-currentthreadsche
         # dulerschedulerequired-behaves?forum=rx
-        if current_thread_scheduler.schedule_required():
-            current_thread_scheduler.schedule(set_disposable)
-        else:
-            set_disposable()
+        current_thread_scheduler.ensure_trampoline(set_disposable)
 
         # Hide the identity of the auto detach observer
         return Disposable.create(auto_detach_observer.dispose)
